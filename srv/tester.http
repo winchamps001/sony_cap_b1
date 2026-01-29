@@ -1,0 +1,83 @@
+###Access the service document
+http://localhost:4004/odata/v4/CatalogService
+###Access the service metadata document
+http://localhost:4004/odata/v4/CatalogService/$metadata
+###Get ALL the employee data
+http://localhost:4004/odata/v4/CatalogService/EmployeeSrv
+###Get SINGLE employee data by KEY - (pick a key from last call)
+http://localhost:4004/odata/v4/CatalogService/EmployeeSrv/02BD2137-0890-1EEA-A6C2-BB55C19867FB
+
+
+###POST the employee data - create
+POST http://localhost:4004/odata/v4/CatalogService/EmployeeSrv
+Content-Type: application/json
+
+
+{
+  "nameFirst": "Christiano",
+  "nameMiddle": null,
+  "nameLast": "Ronaldo",
+  "nameInitials": null,
+  "sex": "M",
+  "language": "E",
+  "phoneNumber": null,
+  "email": "christiano.ro@sony.com",
+  "loginName": "RONALDOCH",
+  "Currency_code": "USD",
+  "salaryAmount": 81463,
+  "accountNumber": "2233445566",
+  "bankId": "26005885",
+  "bankName": "My Bank of New York"
+}
+
+
+
+
+###PATCH the employee data - update -- COPY THE ID FROM LAST CALL RESULT
+PATCH http://localhost:4004/odata/v4/CatalogService/EmployeeSrv/f63f64f6-2e04-42fe-821c-7b19c48c54c7
+Content-Type: application/json
+
+
+{
+    "Currency_code": "EUR",
+    "salaryAmount": 10000000
+}
+
+
+###DELETE the employee data - remove
+DELETE  http://localhost:4004/odata/v4/CatalogService/EmployeeSrv/f63f64f6-2e04-42fe-821c-7b19c48c54c7
+
+###Get ALL orders
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet
+
+
+###Get Single purchase order
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet/74867AD200E41EDBA5D8B0C98DC30052
+
+
+###Lazy loading where load items of that order using association
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet/74867AD200E41EDBA5D8B0C98DC30052?$expand=Items
+
+
+###Pagination - load data chunk by chunk
+# http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet?$top=2&$skip=2
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet
+
+
+###Count the records
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet/$count
+
+
+###Filter data by conditions
+http://localhost:4004/odata/v4/CatalogService/EmployeeSrv?$filter=bankName eq 'My Bank of San Francisco'
+
+
+###Pattern Search
+http://localhost:4004/odata/v4/CatalogService/EmployeeSrv?$filter=contains(nameFirst,'Su')
+
+###Calling non instance bound function
+GET http://localhost:4004/odata/v4/CatalogService/getLargestOrder()
+
+###Calling instance bound action
+POST http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet/74867AD200E41EDBA5D8B0C98DC82052/boost
+Content-Type: application/json
